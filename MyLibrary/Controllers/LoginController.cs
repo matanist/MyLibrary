@@ -19,9 +19,9 @@ namespace MyLibrary.Controllers
 
         MyLibraryDatabaseEntities db = new MyLibraryDatabaseEntities();
         [HttpPost]
-        
         public JsonResult Index(GirisModel girisYap)
         {
+        //Neden JsonResult
             if (db.UsersAccounts.Where(x => x.user_account_name == girisYap.KADI).FirstOrDefault() != null)
             {
                 if (db.UsersAccounts.Where(x => x.user_account_name == girisYap.KADI).FirstOrDefault().user_passwd == girisYap.PASS)
