@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewBag.Title = "Anasayfa";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3>Anasayfa</h3>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="small-box bg-info">
+            <div class="inner isim">
+                <h5><b>Yazar</b></h5>
+
+                <p>En çok eklenen yazar</p>
+            </div>
+            <div class="icon">
+                <i class="icon ion-ios-paper"></i>
+                @*<i class="icon ion-ios-star"></i>*@
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="small-box bg-success">
+            <div class="inner tur">
+                <h5><b>Tür</b></h5>
+
+                <p>En çok eklenen tür</p>
+            </div>
+            <div class="icon">
+                @*<i class="ion ion-stats-bars"></i>*@
+                <i class="icon ion-ios-search"></i>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="small-box bg-warning">
+            <div class="inner yayınev">
+                <h5><b>Yayınevi</b></h5>
+
+                <p>En çok eklenen yayınevi</p>
+            </div>
+            <div class="icon">
+                <i class="icon ion-android-bookmark"></i>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="small-box bg-danger">
+            <div class="inner dil">
+                <h5><b>Dil</b></h5>
+
+                <p>En çok eklenen dil</p>
+            </div>
+            <div class="icon">              
+                <i class="icon ion-ios-world-outline"></i>
+            </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            $(document).ready(function () {
+               $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("MaxValue" , "IndexJson")',
+                    dataType: "JSON",
+                    contentType: "application/json;charset=utf-8",
+                   success: function (gelenVeri) {
+
+                       for (var item in gelenVeri) {
+
+                           $(".isim").append("<h4>" + gelenVeri[item].name + " " + gelenVeri[item].surname + "</h4> ");
+
+                       }
+                   }
+
+               });
+               $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("MaxValueTur" , "IndexJson")',
+                    dataType: "JSON",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (gelenVeri) {
+
+                       for (var item in gelenVeri) {
+
+                           $(".tur").append("<h4>" + gelenVeri[item].genre + "</h4> ");
+
+                       }
+                    }
+
+               });
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("MaxValueYayınevi" , "IndexJson")',
+                    dataType: "JSON",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (gelenVeri) {
+
+                        for (var item in gelenVeri) {
+
+                            $(".yayınev").append("<h4>" + gelenVeri[item].publisher + "</h4> ");
+
+                        }
+                    }
+
+                });
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("MaxValueDil" , "IndexJson")',
+                    dataType: "JSON",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (gelenVeri) {
+
+                        for (var item in gelenVeri) {
+
+                            $(".dil").append("<h4>" + gelenVeri[item].language + "</h4> ");
+
+                        }
+                    }
+
+                });
+
+
+        });
+        </script>

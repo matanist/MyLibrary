@@ -1,0 +1,301 @@
+﻿<div class="col-md-6">
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title adeti2">Tür</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body table-responsive p-0" style="height: 210px;">
+            <table class="table" >
+                <thead>
+
+                </thead>
+                <tbody id="turYukle">
+
+                    @*<tr>
+                            <td>Functional-requirements.docx</td>
+                            <td class="text-right py-0 align-middle">
+
+                                <div class="btn-group btn-group-sm">
+                                    <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>*@
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+            <button type="button" class="btn btn-block.btn-sm btn-outline-success" data-toggle="modal" data-target="#modal-smb"><a href="#"><img src="~/Assets/dist/img/iconfinder_plus-24_103172.ico" height="8" width="8"></a></button>
+
+        </div>
+    </div>
+    <!-- /.card -->
+</div>
+
+
+
+<div class="modal fade" id="modal-smb">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yeni Tür Ekleyelimmm ◕ ‿ ◕ </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="turEkleForm">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Tür</label>
+                            <input type="text" class="form-control tur" placeholder="Biyografi">
+                        </div>
+
+                    </div>
+
+                    <!-- /.card-body -->
+
+                </form>
+                <div class="modal-footer justify-content-between">
+
+                    <button type="button" class="btn btn-success swalDefaultInfo " data-dismiss="modal" id="turEkleButton">Kaydet</button>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+
+<div class="modal fade" id="modal-sm2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Hatalı/Eksik Olmasın ٩(͡๏̯͡๏)۶ </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<form role="form">*@
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Tür</label>
+                        <input type="text" class="form-control " id="turr">
+                    </div>
+
+                </div>
+
+                <!-- /.card-body -->
+            </div>
+
+            <div class="modal-footer justify-content-between">
+
+                <button type="button" class="btn btn-success swalDefaultInfo " data-dismiss="modal" id="idsi2">Kaydet</button>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<div class="modal fade" id="modal-danger2">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h4 class="modal-title">Silinsin mi ?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bak emin misin aşkım geri getiremeyiz&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal" id="silId2">Siliyorum</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script>
+
+    $().ready(function (){
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("TurListele" , "Category")',
+            dataType: "JSON",
+            contentType: "application/json;charset=utf-8",
+            success: function (gelenVeri) {
+                var s = 1;
+                for (var item in gelenVeri) {
+                    var a = s++;
+                    $("#turYukle").append("<tr><td>" + a + "</td><td> " + gelenVeri[item].turu + "</td><td class='text-right py-0 align-middle'><div class='btn-group btn-group-sm'><input type='hidden' value='" + gelenVeri[item].id + "' /><a href='Tur/" + gelenVeri[item].id + "' class='btn btn-info duzenle2' data-toggle='modal' data-target='#modal-sm2' id=" + gelenVeri[item].id + "><i class='fas fa-eye'></i></a><a href = 'Tur/" + gelenVeri[item].id + "' class='btn btn-danger sil' data-toggle='modal' data-target='#modal-danger2' id=" + gelenVeri[item].id + "><i class='fas fa-trash'></i></a></div></td></tr>");
+                                                                                                                                                                                      
+                }
+                $(".adeti2").append(" ( "+a+ " ) ")
+                $(".duzenle2").click(function () {
+                    console.log($(this).parent("div").find("input:eq(0)[type='hidden']").val());
+                    console.log($(this).parents("tr").find("td:eq(1)").html());
+
+                    $("#turr").val($(this).parents("tr").children("td:eq(1)").text());
+                    $("#idsi2").val($(this).parent("div").find("input:eq(0)[type='hidden']").val());
+                });
+
+                $("#idsi2").click(function () {
+                    var obj = {};
+                    obj.id = $.trim($("#idsi2").val());
+                    obj.turAdi = $.trim($("#turr").val());
+                    $.ajax({
+                        type: "POST",
+                        url: ' @Url.Action("TurDuzenle", "Category")',
+                        datatype: JSON,
+                        data: JSON.stringify(obj),
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            if (data == "1") {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+
+                                })
+                                Toast.fire({
+                                    icon: 'info',
+                                    title: 'Düzenleme tamam aşkım'
+                                })
+                                setTimeout(function () {
+
+                                    location.reload();
+                                }, 3000);
+                            }
+
+                        }
+                    });
+
+
+                });
+
+
+
+                $(".sil").click(function () {
+
+                    console.log($(this).parent("div").find("input:eq(0)[type='hidden']").val());
+                    $("#silId2").val($(this).parent("div").find("input:eq(0)[type='hidden']").val());
+                });
+
+                $("#silId2").click(function () {
+                        var obj = {};
+                        obj.id = $("#silId2").val();
+                        $.ajax({
+                            type: "POST",
+                            url: ' @Url.Action("TurSil", "Category")',
+                            datatype: JSON,
+                            data: JSON.stringify(obj),
+                            contentType: "application/json;charset=utf-8",
+                            success: function (data)
+                            {
+                                if (data == "1") {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+
+                                    })
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Silme işlemi başarılı'
+                                    })
+                                    setTimeout(function () {
+
+                                        location.reload();
+                                    }, 3000);
+                                }
+
+
+
+                            }
+                        });
+
+
+                    });
+            }
+        });
+
+          $("#turEkleButton").click(function () {
+              var obj = {};
+
+              obj.turAdi = $.trim($(".tur").val());
+
+             $.ajax({
+                type: "POST",
+                url: ' @Url.Action("TurEkle", "Category")',
+                datatype: JSON,
+                data: JSON.stringify(obj),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data == "0") {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 2000,
+
+                        })
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Hatalı/Eksik Giriş Yeniden Deneyin!'
+                        })
+                    }
+                    if (data == "1") {
+                        document.getElementById("turEkleForm").reset();
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Yeni bir ekleme yaptın'
+                        })
+                        setTimeout(function () {
+
+                            location.reload();
+                        }, 3000);
+
+                    }
+                }
+            });
+                 });
+
+
+    });
+
+
+
+
+
+</script>

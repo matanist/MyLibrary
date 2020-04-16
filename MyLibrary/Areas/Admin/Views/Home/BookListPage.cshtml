@@ -1,0 +1,496 @@
+﻿@model IEnumerable<MyLibrary.Areas.Admin.Data.Book>
+@{
+    ViewBag.Title = "BookListPage";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+<!-- Content Wrapper. Contains page content -->
+@*<div class="content-wrapper">*@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3>Kitap Listesi</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Kitap Listesi</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /Content Header (Page header) -->
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover" id="table2">
+                        <thead>
+                            <tr>
+
+                                <th>Kitap Adı</th>
+                                <th>Yazar</th>
+                                <th>YayınEvi</th>
+                                <th>Fiyatı</th>
+                                <th><button type="button" class="btn btn-block.btn-sm btn-outline-success" data-toggle="modal" data-target="#modal-default"><a href="#"><img src="~/Assets/dist/img/iconfinder_plus-24_103172.ico" height="14" width="14"></a></button></th>
+
+                            </tr>
+                        </thead>
+                        <tbody >
+                            @foreach (var books in Model)
+                            {
+                                <tr>
+
+                                    <td>@books.Book_title</td>
+                                    <td>@books.Author.Author_name @books.Author.Author_surname</td>
+                                    <td>@books.Publisher.Publisher_name</td>
+                                    <td>@books.Book_price</td>
+
+                                    <td class="text-right py-0 align-middle">
+                                        <div class="btn-group btn-group-sm">
+                                            <input type="hidden" value="@books.Book_id" />
+                                            <input type="hidden" value="@books.Book_pages" />
+                                            <input type="hidden" value="@books.Book_edition" />
+                                            <input type="hidden" value="@books.Book_edition_year" />
+                                            <input type="hidden" value="@books.Book_author_id" />
+                                            <input type="hidden" value="@books.Book_genre_id" />
+                                            <input type="hidden" value="@books.Book_publisher_id"/>
+                                            <input type="hidden" value="@books.Book_language_id" />
+
+                                            <a href="BookListPage/@books.Book_id" class="btn btn-info duzenle" data-toggle="modal" data-target="#modal-sm"><i class="fas fa-eye"></i></a>
+                                            <a href="BookListPage/@books.Book_id" class="btn btn-danger sil" data-toggle="modal" data-target="#modal-danger"><i class="fas fa-trash"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                    <div class="modal fade" id="modal-default">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" >Çok güzel kitaplar ekleyelimmm ◕ ‿ ◕ </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form role="form" id="kitapEkleForm">
+                                        <div class="card-body">
+                                            
+                                              
+                                                    <div class="form-group">
+                                                        <label>Kitabın Adı</label>
+                                                        <input type="text" class="form-control kitapAd" placeholder="Araba Sevdası">
+                                                    </div>
+                                        
+                                                    <div class="form-group">
+                                                        <label>Yazar Kategori</label>
+                                                        <select class="form-control yazarKategori"><option selected value="">Seçiniz</option></select>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label>Sayfa Sayısı</label>
+                                                                <input type="text" class="form-control kitapSayfa" placeholder="240">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <!-- text input -->
+                                                            <div class="form-group">
+                                                                <label>Baskı Yılı</label>
+                                                                <input type="text" class="form-control kitapBaskiYil" placeholder="2014">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label>Türü</label>
+                                                                <select class="form-control turKategori"><option selected value="">Seçiniz</option></select>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label>Dil</label>
+                                                                <select class="form-control dilKategori" ><option selected value="">Seçiniz</option></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label>Fiyatı</label>
+                                                            <input type="text" class="form-control kitapFiyat" placeholder="15">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <!-- text input -->
+                                                        <div class="form-group">
+                                                            <label>Baskı</label>
+                                                            <input type="text" class="form-control kitapBaski" placeholder="1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Yayınevi Kategori</label>
+                                                            <select class="form-control yayineviKategori"><option selected value="">Seçiniz</option></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+</form>
+
+
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="submit" class="btn btn-success swalDefaultSuccess"  id="kitapEkleButton" >Kaydet </button>
+                                    </div>
+
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+                    </div>
+
+           
+                        <div class="modal fade" id="modal-sm">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Hatalı/Eksik Olmasın ٩(͡๏̯͡๏)۶ </h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @*<form role="form">*@
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label>Kitabın Adı</label>
+                                                <input type="text" class="form-control" id="title">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Yazar Kategori</label>
+                                                <select class="form-control yazarKategori" id="yazar"><option selected value="">Seçiniz</option></select>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Sayfa Sayısı</label>
+                                                        <input type="text" class="form-control" id="page">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <!-- text input -->
+                                                    <div class="form-group">
+                                                        <label>Baskı Yılı</label>
+                                                        <input type="text" class="form-control" id="baskiyili">
+                                                    </div>
+                                                </div>                                                
+                                                    <!-- text input -->
+                                             
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Türü</label>
+                                                        <select class="form-control turKategori" id="tur"><option selected value="">Seçiniz</option></select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Dil</label>
+                                                        <select class="form-control dilKategori" id="dil"><option selected value="">Seçiniz</option></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Fiyatı</label>
+                                                        <input type="text" class="form-control" id="fiyat">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Baskı</label>
+                                                        <input type="text" class="form-control" id="baski">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Yayınevi Kategori</label>
+                                                        <select class="form-control yayineviKategori" id="yayinevi"><option selected value="">Seçiniz</option></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- /.card-body -->
+                                        </div>
+                                    
+                                        <div class="modal-footer justify-content-between">
+                                            
+                                            <button type="button" class="btn btn-success swalDefaultInfo " data-dismiss="modal" id="idsi" >Kaydet</button>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                       
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                        </div>
+                    
+
+
+                        <div class="modal fade" id="modal-danger">
+                            <div class="modal-dialog">
+                                <div class="modal-content bg-danger">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Silinsin mi ?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Bak emin misin aşkım geri getiremeyiz&hellip;</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+
+                                        <button type="button" class="btn btn-outline-light" data-dismiss="modal" id="silId">Siliyorum</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+
+
+
+
+                    </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+ 
+
+
+
+<script>
+    $(document).ready(function () {
+        $.get('@Url.Action("YazarKategoriYukle" ,"Category")', function (data) {
+            for (var item in data) {
+                $(".yazarKategori").append("<option value='" + data[item].id + "'>" + data[item].kategoriAdi + " " + data[item].kategoriSoyadi + "</option");
+
+            }
+        });
+
+        $.get('@Url.Action("TurKategoriYukle" ,"Category")', function (gelendata) {
+            for (var i in gelendata) {
+                $(".turKategori").append("<option value='" + gelendata[i].id + "'>" + gelendata[i].turAdi + "</option");
+            }
+        });
+
+        $.get('@Url.Action("YayineviKategoriYukle" , "Category")', function (gelen){
+            for (var item in gelen) {
+                $(".yayineviKategori").append("<option value='" + gelen[item].id + "'>" + gelen[item].yayineviAdi + "</option");
+            }
+        });
+        $.get('@Url.Action("DilKategoriYukle" ,"Category")', function (gelendata) {
+            for (var i in gelendata) {
+                $(".dilKategori").append("<option value='" + gelendata[i].id + "'>" + gelendata[i].dilAdi + "</option");
+            }
+        });
+
+
+
+        $("#kitapEkleButton").click(function () {
+            var obj = {};
+            obj.kitapAdi = $.trim($(".kitapAd").val());
+            obj.kitapSayfasi = $(".kitapSayfa").val();
+            obj.kitapBaskisi = $(".kitapBaski").val();
+            obj.kitapBaskiYili = $(".kitapBaskiYil").val();
+            obj.kitapFiyati = $(".kitapFiyat").val();
+            obj.yazarKategori = $(".yazarKategori").val();
+            obj.turKategori = $(".turKategori").val();
+            obj.yayineviKategori = $(".yayineviKategori").val();
+            obj.dilKategori = $(".dilKategori").val();
+            //obj.yayineviKategori = $("#yayineviKategori").val();
+
+            //console.log(obj);
+            $.ajax({
+                type: "POST",
+                url: ' @Url.Action("EkleKitap", "Json")',
+                datatype: JSON,
+                data: JSON.stringify(obj),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+
+                    if (data == "1") {
+                        document.getElementById("kitapEkleForm").reset();
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Yeni bir ekleme yaptın'
+                        })
+                        setTimeout(function () {
+
+                            location.reload();
+                        }, 600);
+
+                    }
+                    else if (data == "0") {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 2000,
+
+                        })
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Hatalı/Eksik Giriş Yeniden Deneyin!'
+                        })
+                        
+                    }
+                }
+            });
+        });
+
+
+        $(".duzenle").click(function () {
+
+            console.log($(this).parent("div").find("input:eq(0)[type='hidden']").val());
+            console.log($(this).parent("div").find("input:eq(1)[type='hidden']").val());
+            console.log($(this).parents("tr").children("td:eq(0)").text());
+            console.log($(this).parents("tr").children("td:eq(1)").text());
+            console.log($('#table2').find("tr:eq(1)").find("td:eq(2)").html());
+           
+
+            $("#title").val($(this).parents("tr").children("td:eq(0)").text());
+            $("#page").val($(this).parent("div").find("input:eq(1)[type='hidden']").val());
+            $("#baski").val($(this).parent("div").find("input:eq(2)[type='hidden']").val());
+            $("#baskiyili").val($(this).parent("div").find("input:eq(3)[type='hidden']").val());
+            $("#fiyat").val($(this).parents("tr").children("td:eq(3)").text());
+            $("#idsi").val($(this).parent("div").find("input:eq(0)[type='hidden']").val());
+            $("#yazar").val($(this).parent("div").find("input:eq(4)[type='hidden']").val());
+            $("#tur").val($(this).parent("div").find("input:eq(5)[type='hidden']").val());
+            $("#yayinevi").val($(this).parent("div").find("input:eq(6)[type='hidden']").val());
+            $("#dil").val($(this).parent("div").find("input:eq(7)[type='hidden']").val());
+
+
+        });
+    $("#idsi").click(function () {
+        var obj = {};
+        obj.kitapId = $("#idsi").val();
+        obj.kitapAdi = $("#title").val();
+        obj.kitapSayfasi = $("#page").val();
+        obj.kitapBaskisi = $("#baski").val();
+        obj.kitapBaskiYili = $("#baskiyili").val();
+        obj.kitapFiyati = $("#fiyat").val();
+        obj.yazarKategori = $("#yazar").val();
+        obj.turKategori = $("#tur").val();
+        obj.yayineviKategori = $("#yayinevi").val();
+        obj.dilKategori = $("#dil").val();
+
+
+            $.ajax({
+                type: "POST",
+                url: ' @Url.Action("duzenleKitap", "Json")',
+                datatype: JSON,
+                data: JSON.stringify(obj),
+                contentType: "application/json;charset=utf-8",
+                success: function (data)
+                {
+                    if (data == "1") {
+                        setTimeout(function () {
+
+                            location.reload();
+                        }, 600);
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+
+                        })
+                    Toast.fire({
+                        icon: 'info',
+                        title: 'Düzenleme tamam aşkım'
+                    })
+ 
+                    }
+
+                }
+            });
+    });
+
+
+        $(".sil").click(function () {
+            console.log($(this).parent("div").find("input:eq(0)[type='hidden']").val());
+            $("#silId").val($(this).parent("div").find("input:eq(0)[type='hidden']").val());
+
+        });
+        $("#silId").click(function () {
+            var obj = {};
+            obj.kitapId = $("#silId").val();
+            $.ajax({
+                type: "POST",
+                url: ' @Url.Action("silKitap", "Json")',
+                datatype: JSON,
+                data: JSON.stringify(obj),
+                contentType: "application/json;charset=utf-8",
+                success: function (data)
+                {
+                    if (data == "1") {
+                        setTimeout(function () {
+
+                            location.reload();
+                        }, 500);
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Silme işlemi başarılı'
+                        })
+                        
+                    }
+
+
+
+                }
+            });
+
+
+        });
+    });
+
+</script>
+
+@*</div>*@
+<!-- /Content Wrapper. Contains page content -->

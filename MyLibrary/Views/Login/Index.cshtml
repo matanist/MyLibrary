@@ -1,0 +1,125 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Assets/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Assets/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    
+
+</head>
+
+<body class="hold-transition lockscreen">
+    <!-- Automatic element centering -->
+
+    <div class="lockscreen-wrapper">
+        <div class="lockscreen-logo">
+            <a href="#"><b>Evine</b>Hoşgeldin !</a>
+        </div>
+        <!-- User name -->
+
+        <div class="lockscreen-name">Aktaş Ailesi ♥</div>
+
+        <!-- START LOCK SCREEN ITEM -->
+        <div class="lockscreen-item">
+            <!-- lockscreen image -->
+            <div class="lockscreen-image">
+                <img src="~/Assets/dist/img/BBPIC.jpg" alt="User Image">
+            </div>
+            <!-- /.lockscreen-image -->
+            <!-- lockscreen credentials (contains the form) -->
+
+            <form class="lockscreen-credentials" id="myForm">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="kAdi" required="" placeholder="Kullanıcı Adı" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="pass" required="" placeholder="♥♥♥♥♥♥♥♥♥">
+
+                    <div class="input-group-append">
+                        <button type="button" class="btn" id="girisYapButton" value="Giris"><i class="fas fa-arrow-right text-muted"></i></button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- /.lockscreen credentials -->
+        </div>
+    </div>
+
+    <!-- /.center -->
+    <!-- jQuery -->
+    <script src="~/Assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+    $("#girisYapButton").click(function () {
+
+            var giriObj = {};
+            giriObj.KADI= $("#kAdi").val();
+            giriObj.PASS= $("#pass").val();
+       $.ajax({
+            type: "POST",
+            url: '@Url.Action("Index", "Login")',
+            data: JSON.stringify(giriObj),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                console.log(result);
+                if (result == 1) {
+                    window.location.href = '@Url.Action("Index", "Home", new { area = "Admin" })';
+                }
+                else if (result == 2)
+                {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+
+                    })
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Hatalı Giriş Yeniden Deneyin!'
+                    })
+                    setTimeout(function () {
+                        window.location.reload();
+                        
+                    }, 1500);
+                    
+                }
+            }
+
+        });
+    });
+    </script>
+
+    <script>
+        function enterPress(e) {
+            if (e.which == 13) {
+                $('#girisYapButton').click();//give your submit an ID
+            }
+        }
+
+        $('#myForm').keypress(enterPress);
+    </script>
+</body>
+
+</html>
+
